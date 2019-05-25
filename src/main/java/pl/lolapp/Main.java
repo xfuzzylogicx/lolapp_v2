@@ -15,7 +15,7 @@ public class Main {
 
        ObjectMapper mapper = new ObjectMapper();
 
-        ChampionDTO championDTO= (mapper.readValue(new File("/home/seb/Desktop/CodersLab/lolapp_v2/src/main/resources/championFull.json"),ChampionDTO.class));
+        ChampionDTO championDTO= (mapper.readValue(new File("F:/JavaApps/lolapp_v2/src/main/resources/championFull.json"),ChampionDTO.class));
         System.out.println("");
 
     }
