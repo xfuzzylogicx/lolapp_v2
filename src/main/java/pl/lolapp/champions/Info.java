@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class Info  implements Serializable {
 
+
 	private int attack;
 	private int defense;
 	private int difficulty;

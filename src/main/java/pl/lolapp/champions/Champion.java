@@ -1,14 +1,8 @@
 package pl.lolapp.champions;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity(name = "champions")
 public class Champion implements Serializable {
 
 
@@ -16,28 +10,18 @@ public class Champion implements Serializable {
 	private int key;
 	private String name;
 	private String title;
-	@OneToOne
 	private Image image;
-	@OneToMany
 	private List<Skin> skins;
 	private String lore;
 	private String blurb;
-	@OneToMany
 	private List<String> allytips;
-	@OneToMany
 	private List<String> enemytips;
-	@OneToMany  ///zmienic pozniej na manymany
 	private List<String> tags;
 	private String partype;
-	@OneToOne
 	private Info info;
-	@OneToOne
 	private Stats stats;
-	@OneToMany
 	private List<ChampionSpell> spells;
-	@OneToOne
 	private Passive passive;
-	@OneToMany
 	private List<Recommended> recommended;
 
 	public String getId() {

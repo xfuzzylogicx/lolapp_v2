@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Image  implements Serializable {
 
+	private transient String id;
 	private String full;
 	private String group;
 	private int h;

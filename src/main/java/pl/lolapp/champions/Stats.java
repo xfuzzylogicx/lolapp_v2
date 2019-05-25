@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import java.io.Serializable;
 
-@Entity
 public class Stats implements Serializable {
 
 	private double armor;

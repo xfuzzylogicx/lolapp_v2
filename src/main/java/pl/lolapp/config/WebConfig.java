@@ -10,6 +10,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -31,6 +32,7 @@ import java.util.Properties;
 @EnableWebMvc
 @ComponentScan(basePackages = "pl.lolapp")
 @EnableTransactionManagement
+@EnableScheduling
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
@@ -63,7 +65,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
     Properties additionalProperties() {
         Properties properties = new Properties();
-        //properties.setProperty("hibernate.hbm2ddl.auto", "drop-and-create");
+        properties.setProperty("hibernate.hbm2ddl.auto", "drop-and-create");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
@@ -86,7 +88,7 @@ public class WebConfig implements WebMvcConfigurer {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/Hibernate_ex?useSSL=false");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/lolapp?useSSL=false");
         dataSource.setUsername("root");
         dataSource.setPassword("coderslab");
         return dataSource;
