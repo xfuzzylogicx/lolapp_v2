@@ -25,7 +25,7 @@ public class StaticDataService {
 
     public boolean fileDownloading = false;
 
-    @Scheduled(fixedRate = 1000 * 60 * 5)
+    @Scheduled(fixedRate = 1000 * 60/*sec*/ * 60/*min.*/)
     public void checkVersion() {
         try {
             URL url = new URL("https://ddragon.leagueoflegends.com/api/versions.json");
@@ -42,7 +42,7 @@ public class StaticDataService {
             String[] versions = content.toString().replaceAll("[^\\d|\\.\\,]", "").split(",");
             System.out.println("Version " + versions[0]);
 
-            unzipFiles(versions[0],true);
+
 
             if (isUpdated(versions[0])) {
                 getStaticData(versions[0]);
@@ -54,7 +54,7 @@ public class StaticDataService {
     }
 
     public boolean isUpdated(String version) {
-        try (Stream<Path> paths = Files.walk(Paths.get(LinuxStaticZipedDataPath))) {
+        try (Stream<Path> paths = Files.walk(Paths.get(staticZipedDataPath))) {
             boolean fileNotExists = paths
                     .filter(Files::isRegularFile)
                     .noneMatch(s -> s.getFileName().endsWith("dragontail-" + version + ".tgz"));
@@ -67,7 +67,7 @@ public class StaticDataService {
 
     public void getStaticData(String version) {
 
-        File tgzFile = new File(LinuxStaticZipedDataPath+"/dragontail-"+version+".tgz");
+        File tgzFile = new File(staticZipedDataPath+"/dragontail-"+version+".tgz");
 
         System.out.println("File downloading");
         try (BufferedInputStream inFile = new BufferedInputStream(new URL(staticDataUrl + version + ".tgz").openStream());
@@ -78,7 +78,7 @@ public class StaticDataService {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
             }
             System.out.println("File downloaded");
-            //unzipFiles(tgzFile);
+            unzipFiles(tgzFile,true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,7 +96,7 @@ public class StaticDataService {
             while ((entry = myTarFile.getNextTarEntry()) != null) {
                 String fileName = tarFile.getName().substring(0, tarFile.getName().lastIndexOf('.'));
                 //File outputDir = new File(tarFile.getParent() + "/" + fileName + "/" + entry.getName());
-                File outputDir = new File(LinuxStaticDataPath+ "/" + fileName + "/" + entry.getName());
+                File outputDir = new File(staticDataPath+ "/" + fileName + "/" + entry.getName());
                 if (!outputDir.getParentFile().exists()) {
                     outputDir.getParentFile().mkdirs();
                 }
@@ -123,9 +123,9 @@ public class StaticDataService {
         }
 
     }
-    public void unzipFiles(String version,boolean unTar)
+    public void unzipFiles(File tgzFile,boolean unTar)
     {
-        File tgzFile = new File(LinuxStaticZipedDataPath+"/dragontail-"+version+".tgz");//to do argumentu
+        //File tgzFile = new File(staticZipedDataPath+"/dragontail-"+version+".tgz");//to do argumentu
         File tarFile = new File(tgzFile.toString().substring(0,tgzFile.toString().lastIndexOf("."))+".tar");
         try {
             System.out.println("Unziping file");
