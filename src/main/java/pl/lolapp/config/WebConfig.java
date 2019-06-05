@@ -40,6 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
         registry.addResourceHandler("/style/**").addResourceLocations("file:/home/seb/Desktop/lolApp/lolapp_v2/src/main/webapp/WEB-INF/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("file:/home/seb/Desktop/lolApp/lolapp_v2/src/main/webapp/WEB-INF/js/");
         registry.addResourceHandler("/files/**").addResourceLocations("file:/home/seb/Desktop/lolApp/lolapp_v2/src/main/resources/");
         registry.addResourceHandler("/championImage/**").addResourceLocations("file:/home/seb/Desktop/lolApp/lolapp_v2/src/main/resources/current_patch/dragontail-9.11.1/9.11.1/img/champion/");
         registry.addResourceHandler("/currentPatch/**").addResourceLocations("file:/home/seb/Desktop/lolApp/lolapp_v2/src/main/resources/current_patch/");
