@@ -75,7 +75,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "drop-and-create");
+        //properties.setProperty("hibernate.hbm2ddl.auto", "drop-and-create");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
@@ -88,7 +88,6 @@ public class WebConfig implements WebMvcConfigurer {
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
     }
-
 
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {

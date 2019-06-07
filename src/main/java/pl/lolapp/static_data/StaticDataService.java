@@ -3,10 +3,8 @@ package pl.lolapp.static_data;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.io.IOUtils;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.support.ServletContextResource;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -96,6 +94,29 @@ public class StaticDataService {
         }
 
     }
+    public void unzipFiles(File tgzFile,boolean unTar)
+    {
+        File tarFile = new File(tgzFile.toString().substring(0,tgzFile.toString().lastIndexOf("."))+".tar");
+        try {
+            System.out.println("Unziping file");
+            GZIPInputStream ginstream = new GZIPInputStream(new FileInputStream(tgzFile));
+            FileOutputStream outstream = new FileOutputStream(tarFile);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = ginstream.read(buf)) > 0) {
+                outstream.write(buf, 0, len);
+            }
+            System.out.println("Unziped file");
+            if(unTar==true)
+            {
+                untarFiles(tarFile);
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
     public void untarFiles(File tarFile) {
         try
         {
@@ -132,29 +153,7 @@ public class StaticDataService {
             e.printStackTrace();
         }
     }
-    public void unzipFiles(File tgzFile,boolean unTar)
-    {
-        File tarFile = new File(tgzFile.toString().substring(0,tgzFile.toString().lastIndexOf("."))+".tar");
-        try {
-            System.out.println("Unziping file");
-            GZIPInputStream ginstream = new GZIPInputStream(new FileInputStream(tgzFile));
-            FileOutputStream outstream = new FileOutputStream(tarFile);
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = ginstream.read(buf)) > 0) {
-                outstream.write(buf, 0, len);
-            }
-            System.out.println("Unziped file");
-            if(unTar==true)
-            {
-                untarFiles(tarFile);
-            }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
+
 }
 
 

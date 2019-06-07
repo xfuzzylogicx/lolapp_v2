@@ -17,14 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class HomePageController {
+public class ComparisonController {
 
     private ChampionDTO championDTO;
     private StaticDataService staticDataService;
     private Champion[] championsComparison= new Champion[3];
 
     @Autowired
-    public HomePageController(StaticDataService staticDataService)
+    public ComparisonController(StaticDataService staticDataService)
     {
         this.staticDataService=staticDataService;
         staticDataService.checkVersion();
@@ -47,11 +47,6 @@ public class HomePageController {
             return championDTO.keys;
     }
 
-    @GetMapping(path= "/")
-    public String getHomepage(Model model)
-    {
-        return "redirect:/championComp";
-    }
 
     @RequestMapping (path= "/championComp", method = RequestMethod.GET)
     public String compareChampions(@RequestParam(name = "champion" ,required = false) String champion, Model model)
@@ -61,6 +56,7 @@ public class HomePageController {
             championsComparison[2]=championsComparison[1];
             championsComparison[1]=championsComparison[0];
             championsComparison[0]=(Champion)championDTO.data.get(champion);
+            model.addAttribute("spells","dragontail-"+StaticDataService.getCurrentVersion()+"/"+StaticDataService.getCurrentVersion()+"/img/spell/");
             model.addAttribute("champ1splash","dragontail-"+StaticDataService.getCurrentVersion()+"/img/champion/loading/"+championsComparison[0].getId()+"_0.jpg");
             model.addAttribute("champion1",championsComparison[0]);
             if(championsComparison[1]!=null)
